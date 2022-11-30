@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/twitter-clone-db-dev
+    username: wassup
+    password: wassup
+    hikari:
+      maximum-pool-size: 30
+
+server:
+  port: 8081
