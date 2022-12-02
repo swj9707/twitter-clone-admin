@@ -10860,6 +10860,12 @@ a:focus {
   }
 }
 
+.bg-logo-image {
+  background: url(../img/twitter-logo.jpg);
+  background-position: center;
+  background-size: cover;
+}
+
 .bg-login-image {
   background: url("https://source.unsplash.com/K4mSJ7kc0As/600x800");
   background-position: center;
