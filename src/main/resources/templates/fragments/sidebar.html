@@ -13,14 +13,35 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" th:href="@{/board/list}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>어드민 유저 관리</span></a>
-        <a class="nav-link" th:href="@{/board/list}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>유저 관리 페이지</span></a>
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menu1"
+           aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>어드민 유저 관리</span>
+        </a>
+        <div id="menu1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="buttons.html">유저 관리</a>
+                <a class="collapse-item" href="cards.html">내역 조회</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menu2"
+           aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>유저 관리</span>
+        </a>
+        <div id="menu2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="buttons.html">유저 관리</a>
+                <a class="collapse-item" href="buttons.html">로그인 이력 조회</a>
+                <a class="collapse-item" href="cards.html">신고 내역 조회</a>
+            </div>
+        </div>
     </li>
 
     <!-- Divider -->
