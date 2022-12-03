@@ -41,7 +41,7 @@ class SecurityConfig {
                     .anyRequest().authenticated()
                     .and()
                 .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                     .maximumSessions(10)
                     .maxSessionsPreventsLogin(true)
                     .expiredUrl("/auth/login")
