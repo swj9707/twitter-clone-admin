@@ -8,13 +8,14 @@ public enum ErrorCode {
     PERMISSION_DENIED(HttpStatus.UNAUTHORIZED, "Unauthorized", "권한이 없습니다."),
     FORBIDDEN(HttpStatus.FORBIDDEN, "Forbidden", "금지된 요청입니다."),
     NOT_FOUND(HttpStatus.NOT_FOUND, "Not found", "리소스를 찾을 수 없습니다."),
+    USER_NOTFOUND(HttpStatus.NOT_FOUND, "Not found", "유저를 찾을 수 없습니다."),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error", "내부 서버 오류입니다. 관리자에게 문의하세요");
 
-    HttpStatus errorCode;
+    HttpStatus code;
     String errorName;
     String errorMessage;
-    ErrorCode(HttpStatus errorCode, String errorName, String errorMessage) {
-        this.errorCode = errorCode;
+    ErrorCode(HttpStatus code, String errorName, String errorMessage) {
+        this.code = code;
         this.errorName = errorName;
         this.errorMessage = errorMessage;
     }

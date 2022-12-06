@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<th:block th:replace="~{/layout/baseLayout :: setContent(~{this::content})}">
+  <th:block th:fragment="content">
+    <th:block layout:fragment="script">
+      <script th:inline="javascript">
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        $(document).ajaxSend(function(e, xhr, options) { xhr.setRequestHeader(header, token); });
+
+        function changeRole(userId){
+          if(confirm("정말 변경하시겠습니까?")){
+            var body = {
+              Id : userId
+            };
+            $.ajax({
+              url : "/adminUser/modifyUserRole",
+              type : "put",
+              data : body,
+              success: function(data){
+                alert(userId + "의 권한이 변경되었습니다.");
+                location.reload();
+              },
+              error: function(data){
+                alert("Error");
+              }
+            })
+          }
+        }
+
+        function deleteUser(userId){
+          if(confirm("정말 삭제하시겠습니까?")){
+            var body = {
+              Id : userId
+            };
+            $.ajax({
+              url : "/adminUser/deleteUser",
+              type : "delete",
+              data : body,
+              success: function(data){
+                alert(userId + "가 삭제되었습니다.");
+                location.reload();
+              },
+              error: function(data){
+                alert("Error");
+              }
+            })
+          }
+        }
+
+      </script>
+    </th:block>
+    <div class="container-fluid">
+      <h1 class="h3 mb-4 text-gray-800">어드민 유저 관리 페이지</h1>
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">어드민 유저 목록</h6>
+        </div>
+        <div class="card-body">
+          <form action="" method="get" class="justify-content-end">
+            <div class="mx-3 mb-1 input-group w-50">
+              <input name="query" type="text" class="form-control" placeholder="검색어를 입력하시오" aria-label="search">
+              <button class="btn btn-success" type="submit" id="button-submit">검색</button>
+            </div>
+          </form>
+          <div class="table-bordered">
+            <table class="table table-bordered table-sm">
+              <thead>
+              <tr>
+                  <th>Seq</th>
+                  <th>유저 아이디</th>
+                  <th>유저 Email</th>
+                  <th>Role</th>
+                  <th>마지막로그인</th>
+                  <th sec:authorize="hasAnyAuthority('ROLE_SUPERADMIN')">관리자 권한</th>
+                  <th sec:authorize="hasAnyAuthority('ROLE_SUPERADMIN')">삭제</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="list : ${AdminUserList}">
+                <td id="userId" th:text="${list.userId}"/>
+                <td th:text="${list.userName}"/>
+                <td th:text="${list.email}"/>
+                <td th:text="${list.role}"/>
+                <td th:text="${list.lastLogin}"/>
+                <td sec:authorize="hasAnyAuthority('ROLE_SUPERADMIN')">
+                    <th:block th:switch="${list.role.toString()}">
+                        <button class="btn-danger"  id="authroizeButton"
+                                th:onclick="'javascript:changeRole(' + ${list.userId} + ')'"
+                                th:case="ADMIN">권한 회수</button>
+                        <button class="btn-primary" id="authroizeButton"
+                                th:onclick="'javascript:changeRole(' + ${list.userId} + ')'"
+                                th:case="OPER">권한 부여</button>
+                    </th:block>
+                </td>
+                  <td sec:authorize="hasAnyAuthority('ROLE_SUPERADMIN')">
+                    <button class="btn-danger" th:onclick="'javascript:deleteUser(' + ${list.userId} + ')'">삭제</button>
+                  </td>
+              </tr>
+              </tbody>
+            </table>
+            <span>
+              <a th:href="@{/adminUser/registAdminUser}">
+                <button type="button" class="btn btn-outline-primary">
+                  등록
+                </button>
+              </a>
+            </span>
+            <ul class="pagination justify-content-center align-items-center">
+              <li class="page-item" th:if="${AdminUserList.hasPrevious()}">
+                <a class="page-link" th:href="@{/adminUser/main(page = ${AdminUserList.getPageable().getPageNumber() - 1})}" tabindex="1">Previous</a>
+              </li>
+              <li class="page-item" th:each="page: ${#numbers.sequence(startPage, endPage)}">
+                <a class="page-link" th:href="@{/adminUser/main(page = ${page} - 1)}">
+                  [[${page}]]
+                </a>
+              </li>
+              <li class="page-item" th:if="${AdminUserList.hasNext()}">
+                <a class="page-link" th:href="@{/adminUser/main(page=${AdminUserList.getPageable().getPageNumber() + 1})}">Next</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </th:block>
+</th:block>
+</html>
