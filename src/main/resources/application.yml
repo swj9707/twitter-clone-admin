@@ -16,22 +16,6 @@ spring:
         default_batch_fetch_size: 1000
   thymeleaf:
     cache: false
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: wujins58@gmail.com
-    password: psbomeicbdajvetv
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-    transport:
-      protocol: smtp
-    debug: true
-    default:
-      encoding: UTF-8
 server:
   port: 8081
   servlet:
