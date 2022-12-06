@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:replace="~{/layout/baseLayout :: setContent(~{this::content})}">
     <th:block th:fragment="content">
         <div class="container-fluid">
@@ -16,6 +17,17 @@
                             모두 이 페이지에서 할 수 있습니다.</li>
                                 <li>이 페이지는 허용 된 사람만 접근할 수 있습니다.</li>
                             </ul>
+                            <!--인증시 사용된 객체에 대한 정보-->
+                            <b>Authenticated DTO:</b>
+                            <div sec:authentication="principal"></div>
+
+                            <!--인증시 사용된 객체의 Username (ID)-->
+                            <b>Authenticated username:</b>
+                            <div sec:authentication="name"></div>
+
+                            <!--객체의 권한-->
+                            <b>Authenticated user role:</b>
+                            <div sec:authentication="principal.authorities"></div>
                         </div>
                     </div>
                 </div>

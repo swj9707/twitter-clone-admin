@@ -1,0 +1,17 @@
+application:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: wujins58@gmail.com
+    password: Thsdnwls!23
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    transport:
+      protocol: smtp
+    debug: true
+    default:
+      encoding: UTF-8

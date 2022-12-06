@@ -1,8 +1,11 @@
 package com.swj9707.twittercloneadmin.user.repository;
 
 import com.swj9707.twittercloneadmin.constant.enums.Role;
+import com.swj9707.twittercloneadmin.mail.service.MailService;
+import com.swj9707.twittercloneadmin.user.dto.AdminUserDTO;
 import com.swj9707.twittercloneadmin.user.dto.AdminUserFormDTO;
 import com.swj9707.twittercloneadmin.user.entity.AdminUserEntity;
+import com.swj9707.twittercloneadmin.user.service.AdminUserServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,14 +27,13 @@ class UserRepositoryTest {
     private AdminUserRepository adminUserRepository;
 
     @Autowired
+    private AdminUserServiceImpl adminUserServiceImpl;
+    @Autowired
+    private MailService mailService;
+    @Autowired
     private MockMvc mockMvc;
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    public void createUser(AdminUserFormDTO dto){
-        AdminUserEntity superAdmin = AdminUserEntity.createUser(dto, passwordEncoder);
-        adminUserRepository.save(superAdmin);
-    }
 
     @Test
     @DisplayName("Insert Super Admin")
@@ -42,12 +42,14 @@ class UserRepositoryTest {
         AdminUserFormDTO dto = AdminUserFormDTO.builder()
                 .userName("root")
                 .password("wassup")
+                .email("wujins58@gmail.com")
                 .createBy("Super User")
-                .role(Role.SUPERADMIN)
                 .build();
 
-        AdminUserEntity superAdmin = AdminUserEntity.createUser(dto, passwordEncoder);
-        adminUserRepository.save(superAdmin);
+        AdminUserEntity adminUser = AdminUserEntity.createUser(dto, passwordEncoder);
+        adminUser.setRole(Role.SUPERADMIN);
+        adminUserRepository.save(adminUser);
+        mailService.sendMailAboutNewAdmin(AdminUserDTO.formToDTO(dto));
 
         List<AdminUserEntity> list = adminUserRepository.findAll();
         list.forEach(element -> {
