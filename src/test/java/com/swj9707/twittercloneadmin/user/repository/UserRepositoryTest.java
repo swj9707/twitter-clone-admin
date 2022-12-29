@@ -43,10 +43,10 @@ class UserRepositoryTest {
                 .userName("root")
                 .password("wassup")
                 .createBy("Super User")
-                .role(Role.SUPERADMIN)
                 .build();
 
         AdminUserEntity superAdmin = AdminUserEntity.createUser(dto, passwordEncoder);
+        superAdmin.setRole(Role.SUPERADMIN);
         adminUserRepository.save(superAdmin);
 
         List<AdminUserEntity> list = adminUserRepository.findAll();
