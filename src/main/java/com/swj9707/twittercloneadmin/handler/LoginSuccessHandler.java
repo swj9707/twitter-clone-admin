@@ -9,13 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
-
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-
-
-//        Cookie idCookie = new Cookie("memberId", String.valueOf(authentication.getName()));
-//        response.addCookie(idCookie);
         response.sendRedirect("/");
     }
 }

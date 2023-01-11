@@ -4,6 +4,11 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+### Spring Boot ###
+application.yml
+application-test.yml
+application-local.yml
+applicatoin-prod.yml
 
 ### STS ###
 .apt_generated

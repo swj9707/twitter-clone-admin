@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <ul th:fragment="sidebar" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/}">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
@@ -14,7 +15,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
+    <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_SUPERADMIN')">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menu1"
            aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
@@ -22,8 +23,8 @@
         </a>
         <div id="menu1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="buttons.html">유저 관리</a>
-                <a class="collapse-item" href="cards.html">내역 조회</a>
+                <a class="collapse-item" th:href="@{/adminUser/main}">유저 관리</a>
+<!--                <a class="collapse-item" href="cards.html">내역 조회</a>-->
             </div>
         </div>
     </li>
