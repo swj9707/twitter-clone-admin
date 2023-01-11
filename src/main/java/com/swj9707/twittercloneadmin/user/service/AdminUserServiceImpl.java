@@ -62,7 +62,13 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public void delete(Long userID) {
-        adminUserRepository.deleteById(userID);
+        AdminUserEntity entity = adminUserRepository.findById(userID)
+                        .orElseThrow(() -> new CustomException(ErrorCode.USER_NOTFOUND));
+        if(entity.getRole().equals(Role.SUPERADMIN)){
+            throw new CustomException(ErrorCode.BAD_REQUEST);
+        } else {
+            adminUserRepository.deleteById(userID);
+        }
     }
 
 }
